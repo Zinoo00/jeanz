@@ -3,3 +3,5 @@
 # Lauren Tan's own introduction, kept as she wrote it.
 docs/pstack.md: i've worked with millions of lines of code at Meta, Netflix, and Cursor
 docs/pstack.md: ship high quality code at Cursor. this turns cursor into a real engineering team
+# The article's own title, kept as its author wrote it.
+README.md: Building agents: When to fold subagents into your main agent loop
