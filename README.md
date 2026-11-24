@@ -24,8 +24,8 @@ chmod +x ~/.local/bin/bombadil
 
 1. Run `/jeanz:setup-pstack`. It picks a model for each role and writes `~/.claude/rules/pstack-models.md`.
 2. Run `/jeanz:adopt` in a project. It builds that project's layers in order. What it writes goes in the project, or in `~/.claude/skills/` when the repo is not yours to change.
-3. Run `/jeanz:grill-me` before new work. It interviews you until you and the agent hold one picture of the work, and it writes no spec.
-4. Run `/jeanz:poteto-mode <task>` for work that needs rigor. It picks a playbook and runs the other skills as the steps need them.
+3. Run `/jeanz:grill-me` when you want the interview alone. It interviews you until you and the agent hold one picture of the work, and it writes no spec.
+4. Run `/jeanz:poteto-mode <task>` for work that needs rigor. It opens with the `grill-me` interview, then picks a playbook and runs the other skills as the steps need them.
 
 [The design](docs/design.md) explains how jeanz is put together, what stays the same for every project, and what each project tunes. [The pstack page](docs/pstack.md) lists pstack's skills, playbooks, and principles. [The guide](docs/guide/README.md) walks through them.
 

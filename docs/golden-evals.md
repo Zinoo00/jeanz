@@ -18,7 +18,7 @@ Changes to jeanz skills and playbooks need numbers, not guesses. Run this set th
 | 2 | Multi-file feature with shared callers | Names the data shape first, builds in the main loop, passes one unified fresh-context verifier with proven safety checks |
 | 3 | Parallel independent workstreams | Splits disjoint modules across parallel worktree lanes and merges verified results |
 | 4 | Contradicting bug logics (two options and four options) | Builds two competing worktree variants with visual evidence for two options, stops to talk before building four options |
-| 5 | Unsettled new work | Runs `grill-me` first, writes no spec file, settles one baseline before coding |
+| 5 | The start of a run, for settled and unsettled work | Runs `grill-me` first, writes no spec file, and starts no other work before the user confirms the baseline |
 | 6 | Diff with a hidden downstream break and workaround comments | One unified fresh-context verifier proves the break and flags the workaround, then the main loop fixes both and adds a guard |
 | 7 | Broken check or missing property during the loop | Adds the missing check and sees it fail first, repairs the broken check, lists each change with its reason, and weakens none to pass |
 | 8 | Standalone `/jeanz:correct` across existing layers | Updates validation layers and `CLAUDE.md` rule table without editing product code, flags needed product refactors for `poteto-mode`, and leaves a live mistake's check failing |

@@ -14,8 +14,8 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
 
 The Principles section below grounds every trigger. The remaining triggers live only here:
 
-- New work whose shape the user has not settled, with the user there to answer → **grill-me** first. Its baseline is the goal.
-- First message → restate the user's goal and the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
+- Every `/poteto-mode` run → **grill-me** first. No task, playbook, or session override skips it. The chat that receives the command interviews the user, and no other work starts until the user confirms the baseline. A delegate never interviews, and a `/loop` wake-up keeps the baseline of its run.
+- The confirmed baseline is the goal. Name the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
 - Starting any agent, whether one `Agent` call or a worker in a parallel fan-out → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `poteto-agent`.
 - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
 - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**.

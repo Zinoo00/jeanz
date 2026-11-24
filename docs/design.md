@@ -16,7 +16,7 @@ The order comes from Lauren Tan's talk "All Code Is Slop (Except Mine)". Most of
 
 `/jeanz:adopt` walks one project through the layers, lowest missing layer first. Layers 1, 2, 4, and 5 are pstack's. Layer 3 and `adopt` are jeanz's own.
 
-New work starts with `/jeanz:grill-me`, which is jeanz's own too. It interviews the user until both sides hold one picture of the work, and then it states a short baseline. It writes no spec.
+New work starts with `/jeanz:grill-me`, which is jeanz's own too. It interviews the user until both sides hold one picture of the work, and then it states a short baseline. It writes no spec. Every `/jeanz:poteto-mode` run opens with it.
 
 ## Two tiers
 
