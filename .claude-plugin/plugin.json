@@ -1,0 +1,17 @@
+{
+  "name": "jeanz",
+  "version": "0.5.0",
+  "description": "Jin's software factory for Claude Code. It holds pstack by Lauren Tan and Jin's own skills. Corrections become checks, and agents prove their own work.",
+  "author": {
+    "name": "Jin"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pstack",
+    "poteto-mode",
+    "verification",
+    "property-based-testing",
+    "bombadil",
+    "principles"
+  ]
+}

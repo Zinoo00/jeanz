@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Archive</title></head>
+<body>
+<h1>Archive</h1>
+<p>signed in as fixture.</p>
+<button id="restore">Restore view</button>
+<a href="/app.html">Back to items</a>
+<script>
+  document.getElementById("restore").addEventListener("click", () => { fetch("/api/ok?archive"); });
+</script>
+</body>
+</html>

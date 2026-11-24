@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Probes</title>
+<script>
+  const earlyFetch = window.fetch;
+</script>
+</head>
+<body>
+<h1>Probes</h1>
+<p>signed in as fixture. Each request below is dangerous, and the page sends it while it loads.</p>
+<a href="/app.html">Back to items</a>
+<form id="by-method" method="post" action="/__destructive/load-submit" target="_blank" hidden></form>
+<form id="by-event" method="post" action="/__destructive/load-form" target="_blank" hidden></form>
+<form id="by-field" method="post" action="/api/ok?field" target="_blank" hidden><input type="hidden" name="_method" value="delete"></form>
+<div id="shadow" hidden></div>
+<div hidden><template shadowrootmode="closed"><form method="post" action="/api/ok?declared-field"><input type="hidden" name="_method" value="delete"><button>Discard</button><img alt="" src="data:," onerror="this.previousElementSibling.click()"></form></template></div>
+<div id="declared-click" hidden><template shadowrootmode="open"><form method="post" action="/__destructive/load-declared-click" target="sink"><button>Remove</button></form></template></div>
+<div id="declared-script" hidden><template shadowrootmode="open"><form method="post" action="/__destructive/load-declared-script" target="sink"></form></template></div>
+<a id="jump" href="#delete-section">Jump to the delete section</a>
+<iframe src="/probe-frame.html" title="probe frame" hidden></iframe>
+<iframe name="sink" title="form target" hidden></iframe>
+<iframe title="inline frame" hidden srcdoc="<script>fetch('/__destructive/load-srcdoc', { method: 'POST' }).catch(() => {}); fetch('/api/ok?srcdoc');</script>"></iframe>
+<script>
+  fetch("/__destructive/load-fetch", { method: "POST" }).catch(() => fetch("/api/ok?fetch-refused"));
+  earlyFetch("/__destructive/load-early", { method: "POST" }).catch(() => {});
+  fetch("/api/ok?method", { method: "DELETE" }).catch(() => {});
+  fetch(new Request("/api/ok?request", { method: "DELETE" })).catch(() => {});
+  const request = new XMLHttpRequest();
+  request.onerror = () => fetch("/api/ok?xhr-refused");
+  request.open("POST", "/__destructive/load-xhr");
+  request.send();
+  Navigator.prototype.sendBeacon.call(navigator, "/__destructive/load-beacon");
+  document.getElementById("by-method").submit();
+  document.getElementById("by-event").requestSubmit();
+  document.getElementById("by-field").requestSubmit();
+  window.open("/__destructive/load-open");
+
+  const shadow = document.getElementById("shadow").attachShadow({ mode: "closed" });
+  shadow.innerHTML = `
+    <a href="/__destructive/load-link" target="_blank">Remove</a>
+    <form method="post" action="/__destructive/load-shadow-target" target="sink"><button>Remove</button></form>`;
+  shadow.querySelector("a").click();
+  shadow.querySelector("button").click();
+  document.getElementById("declared-click").shadowRoot.querySelector("button").click();
+  document.getElementById("declared-script").shadowRoot.querySelector("form").requestSubmit();
+  const loose = document.createElement("a");
+  loose.href = "/__destructive/load-loose";
+  loose.target = "sink";
+  loose.click();
+  fetch(new String("/__destructive/load-string"), { method: "POST" }).catch(() => {});
+  window.addEventListener("hashchange", () => fetch("/api/ok?jumped"));
+  document.getElementById("jump").click();
+  history.pushState(null, "", "/__destructive/pushed");
+  fetch(location.pathname === "/__destructive/pushed" ? "/api/ok?pushed" : "/api/ok?push-refused");
+  history.replaceState(null, "", "/probe.html");
+  fetch("/api/echo?fetch", { method: "POST", headers: { "X-Probe": "kept" }, body: "payload" });
+  const echo = new XMLHttpRequest();
+  echo.open("POST", "/api/echo?xhr");
+  echo.setRequestHeader("X-Probe", "kept");
+  echo.send("payload");
+  navigator.sendBeacon("/api/echo?beacon", "payload");
+  location.assign("/__destructive/load-assign");
+</script>
+</body>
+</html>

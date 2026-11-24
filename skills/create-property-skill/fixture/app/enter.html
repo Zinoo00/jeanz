@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Forms that Enter submits</title></head>
+<body>
+<h1>Forms that Enter submits</h1>
+<p>signed in as fixture. Enter in each field but the last would do damage.</p>
+<form id="by-address" method="post" action="/__destructive/enter-address">
+  <input type="text" id="note" name="note" aria-label="Note">
+</form>
+<form id="by-button" method="post" action="/api/ok?enter-button" target="sink">
+  <input type="text" id="why" name="why" aria-label="Why">
+  <button id="with-reason">Delete with reason</button>
+</form>
+<form id="by-outside-button" method="post" action="/api/ok?enter-outside" target="sink">
+  <input type="text" id="outside" name="outside" aria-label="Outside">
+</form>
+<button form="by-outside-button">Delete from outside</button>
+<form id="by-input" method="post" action="/api/ok?enter-input" target="sink">
+  <input type="text" id="input" name="input" aria-label="Input">
+  <input type="submit" value="Delete by input">
+</form>
+<form id="by-override" method="post" action="/api/ok?enter-override" target="sink">
+  <input type="hidden" name="_method" value="delete">
+  <input type="text" id="override" name="override" aria-label="Override">
+</form>
+<form id="safe-form" method="post" action="/api/ok?enter-safe" target="sink">
+  <input type="text" id="safe" name="safe" aria-label="Safe">
+</form>
+<iframe name="sink" title="form target" hidden></iframe>
+<script>
+  document.getElementById("with-reason").addEventListener("click", () => { fetch("/__destructive/d18", { method: "POST" }).catch(() => {}); });
+</script>
+</body>
+</html>

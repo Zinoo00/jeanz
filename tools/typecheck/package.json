@@ -1,0 +1,11 @@
+{
+  "name": "jeanz-typecheck",
+  "private": true,
+  "description": "Type-checks the property templates against Bombadil's published types, and parses them to find loose types.",
+  "devDependencies": {
+    "@antithesishq/bombadil": "0.7.10",
+    "@types/node": "24.19.2",
+    "oxc-parser": "0.157.0",
+    "typescript": "7.0.2"
+  }
+}

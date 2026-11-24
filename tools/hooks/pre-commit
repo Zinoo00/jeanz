@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euo pipefail
+
+READ_BY_SELFTEST=(skills/create-property-skill/templates skills/create-property-skill/fixture)
+snapshot="$(mktemp -d)"
+trap 'rm -rf "$snapshot"' EXIT
+git checkout-index --all --prefix="$snapshot/"
+if git diff --cached --quiet -- "${READ_BY_SELFTEST[@]}"; then also=""; else also=selftest; fi
+"$(dirname "$0")/verify" "$snapshot" "$also"

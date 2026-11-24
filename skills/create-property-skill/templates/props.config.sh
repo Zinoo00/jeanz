@@ -1,0 +1,11 @@
+ORIGIN=""
+READY_URL=""
+READY_TEXT=""
+DISPOSABLE=""
+DISPOSABLE_HOSTS=()
+WIDTH=1280
+HEIGHT=800
+LOGIN=""
+HEADERS=()
+BOMBADIL_ARGS=()
+OUT_ROOT="$HOME/.jeanz/properties/$(basename "$HERE")-$(printf %s "$HERE" | cksum | cut -d' ' -f1)"

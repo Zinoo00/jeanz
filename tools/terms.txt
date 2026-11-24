@@ -1,0 +1,6 @@
+# A term jeanz no longer uses, a tab, then what to write. tools/check.sh fails on the first one in jeanz's own text and file names.
+fuzz	property check
+test app	fixture app
+baseline entr	default entry
+click guard	guard
+`start` URL	`start` address

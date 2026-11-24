@@ -1,0 +1,14 @@
+{
+  "name": "jeanz",
+  "description": "Jin's software factory on top of pstack.",
+  "owner": {
+    "name": "Jin"
+  },
+  "plugins": [
+    {
+      "name": "jeanz",
+      "source": "./",
+      "description": "Jin's software factory on top of pstack."
+    }
+  ]
+}

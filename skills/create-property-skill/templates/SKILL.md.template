@@ -1,0 +1,24 @@
+---
+name: properties-<app>
+description: "Check <app>'s web UI against its properties with Bombadil. It explores the app at random, checks properties in every state, and cuts a failing run to a few steps. Use after a UI change and before calling it done, when a UI bug is reported, or when the user corrects how the UI behaves."
+---
+
+# Properties of <app>
+
+Read [the guide](GUIDE.md) before the first run. It holds the commands, how to read a run, how to triage a violation, and the protections. The guide is sealed and the same in every app. This file holds what is true of <app> alone.
+
+## Start and stop
+
+- Start a disposable instance with `<run-command>`.
+- Stop only what you started, with `<stop-command>`. Never kill by process name.
+
+## Gotchas
+
+Write here what a run of <app> taught you, such as a default entry that you filtered out, and why.
+
+## Properties of this app
+
+The guide lists the properties that every app gets. Each property in `spec/properties.ts` needs a row here.
+
+| Property | Rule in plain words |
+|---|---|

@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+snapshot="$1"
+fixture="$snapshot/skills/create-property-skill/fixture"
+"$snapshot/tools/check.sh"
+[ "$2" = selftest ] || exit 0
+evidence="$(mktemp -d)"
+echo "hook: a file that the self-test reads changed. Checking the break table against the files, then running the self-test (about 5 minutes)"
+if ! APPLY_ONLY=yes "$fixture/mutants.sh" "$evidence/breaks" > "$evidence/breaks.log" 2>&1; then
+  grep -vE '^APPLIES ' "$evidence/breaks.log" >&2 || true
+  echo "hook: a break in fixture/mutants.sh no longer applies to the sealed files. Fix its pattern, so the behavior keeps a case that can fail" >&2
+  rm -rf "$evidence"
+  exit 1
+fi
+if "$fixture/selftest.sh" "$evidence"; then
+  rm -rf "$evidence"
+else
+  echo "hook: self-test failed, and its evidence is kept in $evidence" >&2
+  exit 1
+fi

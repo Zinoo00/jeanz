@@ -1,0 +1,62 @@
+# Names that only Cursor has. tools/check.sh fails on each one in jeanz's text.
+# A line that starts with = names a rule, a tab, then the fix that the check prints.
+# Every other line is a rule, a tab, a pattern for grep -E, a tab, then an example that the pattern must catch.
+# tools/check.sh fails on a pattern that misses its own example, and tools/check.test.sh plants each example.
+= Cursor tool name	use the Claude Code tool, such as Agent, AskUserQuestion, Edit, or Bash (docs/claude-code-port.md#tools)
+Cursor tool name	`Task`	Call the `Task` tool.
+Cursor tool name	Task (subagent|call|spawn|tool)	Make a Task call for it.
+Cursor tool name	\bTask\(	Task(prompt) starts one.
+Cursor tool name	\bAskQuestion\b	Use AskQuestion first.
+Cursor tool name	\bStrReplace\b	Use StrReplace here.
+Cursor tool name	\bReadLints\b	Run ReadLints after.
+Cursor tool name	\bSwitchMode\b	Call SwitchMode to plan.
+Cursor tool name	\bShell tool\b	Run it in the Shell tool.
+Cursor tool name	\bSemanticSearch\b	Find it with SemanticSearch.
+Cursor tool name	\bcodebase_search\b	Find it with codebase_search.
+Cursor tool name	\brun_terminal_cmd\b	Start it with run_terminal_cmd.
+Cursor tool name	\bbrowser-use\b	Hand the page to browser-use.
+Cursor tool name	@Codebase\b	Ask @Codebase where it is.
+= Cursor subagent field	see docs/claude-code-port.md#subagents
+Cursor subagent field	generalPurpose	Spawn a generalPurpose helper.
+Cursor subagent field	readonly: *(true|false)	Set readonly: true on it.
+Cursor subagent field	environment: *"?(cloud|local)	Set environment: cloud on it.
+Cursor subagent field	cloud_base_branch	Pass cloud_base_branch too.
+Cursor subagent field	file_attachments	Pass file_attachments too.
+Cursor subagent field	run_in_background	Pass run_in_background too.
+= Cursor model slug	Agent takes model: opus|sonnet|haiku|fable plus effort (docs/claude-code-port.md#models)
+Cursor model slug	claude-(opus|sonnet|fable|haiku)-[0-9]	Run it on claude-opus-4.
+Cursor model slug	[Gg]emini	Run it on gemini.
+Cursor model slug	\bgpt-[0-9]	Run it on gpt-5.5-high.
+Cursor model slug	\bcomposer-[0-9]	Run it on composer-2.
+Cursor model slug	\bgrok-[a-z]	Run it on grok-code-fast-1.
+= Cursor path	use .claude/ paths, CLAUDE.md, ~/.claude/projects transcripts (docs/claude-code-port.md#paths)
+Cursor path	\.cursor\b	Put it under .cursor/rules.
+Cursor path	\.cursor(rules|ignore)	See .cursorrules and .cursorignore.
+Cursor path	@cursor[-/]	Import @cursor/sdk for it.
+Cursor path	\.mdc\b	Write the rule in style.mdc.
+Cursor path	agent-transcripts	Read agent-transcripts for it.
+Cursor path	\bcursor-agent\b	Start cursor-agent in the repo.
+Cursor path	\bcursor\.com\b	Read cursor.com for it.
+= Cursor-only feature	map or drop it (docs/claude-code-port.md#cursor-only-features)
+Cursor-only feature	[Bb]ugbot	Wait for Bugbot.
+Cursor-only feature	Cursor [Aa]utomations?	Set up Cursor Automations.
+Cursor-only feature	update_state	Call update_state after.
+Cursor-only feature	SendToUser	Call SendToUser after.
+Cursor-only feature	api2\.cursor	It calls api2.cursor for that.
+Cursor-only feature	[Cc]loud agents?	Start a cloud agent.
+Cursor-only feature	custom mode	Make a custom mode for it.
+Cursor-only feature	option\+enter	Press option+enter.
+Cursor-only feature	Grok	Ask Grok.
+Cursor-only feature	Background Agents?	Start a Background Agent.
+Cursor-only feature	\bComposer\b	Open Composer.
+= Cursor-only skill	see docs/claude-code-port.md#cursor-only-features
+Cursor-only skill	create-skill	Run create-skill.
+Cursor-only skill	deslop	Run the deslop skill.
+Cursor-only skill	control-ui	Run control-ui.
+Cursor-only skill	control-cli	Run control-cli.
+Cursor-only skill	cursor-team-kit	Install cursor-team-kit.
+= Cursor product mention	say Claude Code, or move attribution to UPSTREAM.md
+Cursor product mention	\bCursor\b	Cursor does this.
+= old namespace	skills are jeanz:<name>, and the adapter is gone
+old namespace	(^|[^a-z])/?pstack:	Run pstack:how.
+old namespace	docs/harness/claude-code\.md	Read docs/harness/claude-code.md.

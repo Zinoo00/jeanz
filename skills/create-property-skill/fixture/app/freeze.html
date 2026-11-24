@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>A page that stops answering</title></head>
+<body>
+<h1>A page that stops answering</h1>
+<p>signed in as fixture. The third click on the button never returns.</p>
+<button id="count">Count</button>
+<script>
+  let clicks = 0;
+  document.getElementById("count").addEventListener("click", () => { if (++clicks > 2) for (;;) {} });
+</script>
+</body>
+</html>

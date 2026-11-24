@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Outer frame</title></head>
+<body>
+<button id="pay" style="position: fixed; inset: 0; width: 100%; height: 100%;">Pay now</button>
+<script>
+  document.getElementById("pay").addEventListener("click", () => { fetch("/api/ok?xframe"); });
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+READ_BY_SELFTEST=(skills/create-property-skill/templates skills/create-property-skill/fixture)
+GONE=0000000000000000000000000000000000000000
+while read -r _ pushed _ there; do
+  [ "$pushed" != "$GONE" ] || continue
+  snapshot="$(mktemp -d)"
+  git archive "$pushed" | tar -x -C "$snapshot"
+  if [ "$there" != "$GONE" ] && git diff --quiet "$there" "$pushed" -- "${READ_BY_SELFTEST[@]}" 2> /dev/null; then also=""; else also=selftest; fi
+  "$(dirname "$0")/verify" "$snapshot" "$also" < /dev/null || { rm -rf "$snapshot"; exit 1; }
+  rm -rf "$snapshot"
+done

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Controls that open a tab</title></head>
+<body>
+<h1>Controls that open a tab</h1>
+<p>signed in as fixture. Each control but the last would open a new tab.</p>
+<a id="tab-link" href="/idle.html?tab-link" target="help">Help in a named tab</a>
+<button id="tab-open">Open help</button>
+<form method="get" action="/idle.html" target="_blank"><input type="hidden" name="tab-form" value="1"><button id="tab-form">Search in a tab</button></form>
+<form method="get" action="/idle.html"><input type="hidden" name="tab-button" value="1"><button id="tab-button" formtarget="_blank">Search by button</button></form>
+<button id="tick">Tick</button>
+<iframe id="other" title="a frame from another origin" width="200" height="40"></iframe>
+<script>
+  document.getElementById("other").src = location.protocol + "//localhost:" + location.port + "/xframe.html";
+  document.getElementById("tab-open").addEventListener("click", () => { window.open("/idle.html?tab-open"); });
+  document.getElementById("tick").addEventListener("click", () => { fetch("/api/ok?tick"); });
+</script>
+</body>
+</html>

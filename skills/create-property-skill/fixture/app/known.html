@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Known issues</title></head>
+<body>
+<h1>Known issues</h1>
+<p>signed in as fixture. The fixture's KNOWN_ISSUES lists each problem on this page.</p>
+<script>
+  console.error("fixture: known noisy widget failed to load");
+  fetch("/api/legacy");
+  const request = new XMLHttpRequest();
+  request.onload = () => {
+    request.onload = null;
+    request.open("GET", "/api/legacy?xhr");
+    request.send();
+  };
+  request.open("GET", "/api/ok?reused");
+  request.send();
+  Promise.reject("known legacy promise");
+  throw new Error("known legacy widget");
+</script>
+</body>
+</html>

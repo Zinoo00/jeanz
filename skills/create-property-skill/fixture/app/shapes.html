@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Shapes</title></head>
+<body>
+<h1>Shapes</h1>
+<p>signed in as fixture. Each control in the first list is dangerous. Each control in the second list only looks dangerous.</p>
+
+<section aria-label="dangerous shapes">
+  <button data-destructive>Tidy up</button>
+  <button><span role="img" aria-label="Delete icon"></span></button>
+  <button><i title="Delete entry"></i></button>
+  <div role="button" tabindex="0"><span>Delete workspace</span> <a href="#help">?</a></div>
+  <input type="image" alt="Delete image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <input type="checkbox" id="history"> <label for="history">Delete history on exit</label>
+  <label for="now">Proceed</label> <button id="now">Delete now</button>
+  <label><input type="checkbox"> <span>Purge data after a month</span></label>
+  <button><svg width="16" height="16"><title>Delete vector</title><rect width="16" height="16"></rect></svg></button>
+  <button>Delete
+    every draft</button>
+  <div role="button" tabindex="0">Open row <button>Delete row item</button></div>
+  <div onclick="void 0">Delete forever</div>
+  <details><summary>Delete options</summary><p>None.</p></details>
+  <span tabindex="0">Delete focus</span>
+  <button><u>D</u>elete letter</button>
+  <button>Del<wbr>ete all</button>
+  <button><mark>Rem</mark>ove tag</button>
+  <button>Log-out now</button>
+  <input type="radio" id="wipe"> <label for="wipe">Wipe on close</label>
+  <button data-destructive style="width: 24px; height: 24px"></button>
+  <div id="labelled-host"></div>
+  <span role="link">Delete by link</span>
+  <span role="checkbox">Delete by checkbox</span>
+  <span role="radio">Delete by radio</span>
+  <span role="switch">Delete by switch</span>
+  <span role="tab">Delete by tab</span>
+  <span role="menuitemcheckbox">Delete by menuitemcheckbox</span>
+  <span role="menuitemradio">Delete by menuitemradio</span>
+  <span role="option">Delete by option</span>
+  <span role="treeitem">Delete by treeitem</span>
+  <span role="gridcell">Delete by gridcell</span>
+  <span role="button">Delete by button</span>
+  <span role="menuitem">Delete by menuitem</span>
+  <span data-destructive>Clear the cache</span>
+  <button>Delete every stored report and every exported file of this whole workspace</button>
+  <label for="keep">Delete after</label> <select id="keep"><option>a month</option></select>
+  <label for="gone" aria-label="Delete archive">Archive</label> <input type="checkbox" id="gone">
+  <img id="pic" alt="Delete picture" width="16" height="16" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="> <button aria-labelledby="pic">y</button>
+</section>
+
+<section aria-label="safe look-alikes">
+  <button>Deleted list</button>
+  <button>Signature</button>
+  <label for="why">Delete reason</label> <input type="text" id="why">
+  <input type="text" aria-label="Delete note">
+  <textarea aria-label="Remove after"></textarea>
+</section>
+<script>
+  const labelled = document.getElementById("labelled-host").attachShadow({ mode: "open" });
+  labelled.innerHTML = '<span id="by"><span>Delete</span><span>by sha<!---->dow label</span></span> <button aria-labelledby="by">x</button>';
+</script>
+</body>
+</html>

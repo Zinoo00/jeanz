@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Inner frame</title><style>html, body { overflow: hidden; margin: 0; } button { margin: 0; height: 24px; }</style></head>
+<body>
+<button id="frame-danger" style="width: 130px">Delete in frame</button><button id="frame-safe" style="width: 40px; overflow: hidden">Frame refresh</button>
+<button id="frame-side" style="position: absolute; left: 600px; top: 8px;">Frame off to the side</button>
+<script>
+  document.getElementById("frame-safe").addEventListener("click", () => { fetch("/api/ok?frame"); });
+  document.getElementById("frame-danger").addEventListener("click", () => { fetch("/__destructive/d14", { method: "POST" }); });
+</script>
+</body>
+</html>

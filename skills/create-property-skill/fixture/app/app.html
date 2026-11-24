@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Property fixture</title>
+<style>
+  body { font: 16px system-ui, sans-serif; margin: 24px; }
+  button, [role=button] { margin: 4px; padding: 8px 12px; display: inline-block; }
+  #spinner { display: none; }
+  #spinner.visible { display: inline; }
+  [role=menu] { list-style: none; padding: 0; }
+  [role=menuitem] { display: inline-block; padding: 6px 10px; border: 1px solid #999; cursor: pointer; }
+  iframe { display: block; margin: 8px 0; border: 3px solid #999; }
+  #inner { border-width: 26px 3px 3px 26px; padding: 26px 0 0 40px; }
+</style>
+</head>
+<body>
+<h1>Property fixture</h1>
+<p>signed in as fixture. Planted bugs for the create-property-skill self-test. Do not fix them.</p>
+
+<section aria-label="planted bugs">
+  <button id="add">Add item</button>
+  <button id="clear">Clear</button>
+  <button id="save">Save</button>
+  <span id="spinner" role="status" aria-label="Saving">Saving…</span>
+  <button id="report">Refresh report</button>
+  <button id="load">Load</button>
+  <ul id="items"></ul>
+</section>
+
+<section aria-label="safe look-alikes">
+  <button id="deleted">Deleted items</button>
+</section>
+
+<section aria-label="dangerous controls">
+  <button data-destructive data-hit="d1">Delete everything</button>
+  <button aria-label="Delete row" data-hit="d2">🗑</button>
+  <ul role="menu"><li role="menuitem" data-hit="d3">Delete</li><li role="menuitem" id="rename">Rename</li></ul>
+  <form id="account" method="post" action="/__destructive/form">
+    <input type="text" name="reason" aria-label="Reason">
+    <input type="submit" value="Delete account">
+  </form>
+  <button data-hit="d5">Permanently delete</button>
+  <button data-hit="d6">전체삭제</button>
+  <div role="button" tabindex="0" id="row" data-dbl="d7">Remove (double-click)</div>
+  <a href="/__destructive/link">Remove link</a>
+  <button id="logout">Log out</button>
+  <button data-hit="d10"><img alt="Remove attachment" width="16" height="16" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></button>
+  <span id="lbl11">Delete draft</span><button aria-labelledby="lbl11" data-hit="d11">✕</button>
+  <button title="removeEntry" data-hit="d12">⌫</button>
+  <div id="shadow-host"></div>
+  <div id="slot-host"><span><b>Delete</b><i>slotted</i></span></div>
+  <div role="button" tabindex="0" aria-label="Delete workspace" data-hit="d17"><a href="#top">More</a></div>
+  <button id="probes" data-destructive>Purge through every channel</button>
+  <form id="probe-form" method="post" action="/__destructive/p-submit" hidden></form>
+  <form id="settings" method="get" action="/api/ok">
+    <button type="submit" formmethod="post" formaction="/__destructive/formaction">Delete through another address</button>
+  </form>
+  <iframe id="inner" src="/frame.html" title="inner frame" width="320" height="44"></iframe>
+</section>
+
+<script>
+  console.error("fixture: known noisy widget failed to load");
+  console.warn("fixture: a warning, which is not an error");
+
+  const CLEAR_BUG = __CLEAR_BUG__;
+  const items = document.getElementById("items");
+  const spinner = document.getElementById("spinner");
+  const hit = (id, method) => {
+    const x = new XMLHttpRequest();
+    x.open(method || "POST", "/__destructive/" + id);
+    x.send();
+  };
+
+  document.getElementById("add").addEventListener("click", () => {
+    const li = document.createElement("li");
+    li.textContent = "item " + (items.children.length + 1);
+    items.appendChild(li);
+  });
+
+  document.getElementById("clear").addEventListener("click", () => {
+    if (items.children.length < 3) return;
+    if (CLEAR_BUG) throw new Error("planted: Clear after three items");
+    items.replaceChildren();
+  });
+
+  let pending = null;
+  document.getElementById("save").addEventListener("click", () => {
+    if (pending !== null) { clearTimeout(pending); return; }
+    spinner.classList.add("visible");
+    pending = setTimeout(() => { spinner.classList.remove("visible"); pending = null; }, 300);
+  });
+
+  document.getElementById("report").addEventListener("click", () => { fetch("/api/broken"); });
+  document.getElementById("load").addEventListener("click", () => { fetch("/api/ok"); });
+  document.getElementById("deleted").addEventListener("click", () => { fetch("/api/ok?deleted"); });
+
+  document.querySelectorAll("[data-hit]").forEach((el) => {
+    el.addEventListener("click", () => hit(el.dataset.hit, el.dataset.hit === "d2" ? "DELETE" : "POST"));
+  });
+  document.getElementById("row").addEventListener("dblclick", () => { fetch("/__destructive/d7", { method: "POST" }); });
+  document.getElementById("logout").addEventListener("click", () => {
+    fetch("/logout", { method: "POST" }).catch(() => {}).finally(() => { location.href = "/login.html"; });
+  });
+
+  const shadow = document.getElementById("shadow-host").attachShadow({ mode: "open" });
+  const shadowButton = document.createElement("button");
+  shadowButton.textContent = "Delete in shadow";
+  shadowButton.addEventListener("click", () => hit("d13"));
+  shadow.appendChild(shadowButton);
+
+  const slotButton = document.createElement("button");
+  slotButton.appendChild(document.createElement("slot"));
+  slotButton.addEventListener("click", () => hit("d16"));
+  document.getElementById("slot-host").attachShadow({ mode: "open" }).appendChild(slotButton);
+
+  document.getElementById("probes").addEventListener("click", () => {
+    navigator.sendBeacon("/__destructive/p-beacon");
+    fetch("/__destructive/p-fetch", { method: "POST" });
+    document.getElementById("probe-form").submit();
+  });
+
+  const outer = document.createElement("iframe");
+  outer.id = "outer";
+  outer.title = "outer frame";
+  outer.width = 320;
+  outer.height = 60;
+  outer.src = location.protocol + "//localhost:" + location.port + "/xframe.html";
+  document.body.appendChild(outer);
+</script>
+</body>
+</html>
