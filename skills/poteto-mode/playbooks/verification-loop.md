@@ -2,15 +2,15 @@
 
 Run this automatically after implementing any code change, before opening a PR or reporting done. Do not wait for the operator to invoke post-test skills or approve reversible fixes.
 
-**Two actors by default: the main loop builds, tests, cleans, and hardens; one fresh-context verifier audits the diff.** Scale up to extra subagents only for parallel work, A/B variants, or high-stakes contested reviews.
+**Two actors: the main loop builds, tests, cleans, and hardens, and one fresh-context verifier audits the diff.** The chat that owns the run runs this loop. When the work ran in lanes, it runs once over the whole diff. A lane whose kickoff hands it the loop runs it on its own unit, and then no pass over the whole diff follows. Extra subagents join only for A/B variants or high-stakes contested reviews.
 
 1. **Self-verify and clean in the main loop.**
    - Run the repo's typecheck, lint, and tests for the touched scope, then prove behavior on the real artifact through the control skill (`verify-<app>` when present, otherwise browser tools for UI or `tmux` for CLI or TUI). Never stop at "it compiles" (**principle-prove-it-works**).
    - Check `.claude/skills/` and `~/.claude/skills/` for `properties-<app>`. When one exists and the diff touches web UI or user-facing API behavior, start a disposable instance in this lane, run `props.sh run 2m` (or longer when requested), triage any violation, and stop the instance.
-   - Run `/simplify` in the main loop and strip narrating, stale, or redundant comments directly. Do not spawn a separate comment-only subagent on routine diffs.
+   - Clean up in the main loop. On a diff of about 50 changed lines or fewer, read it once yourself for reuse, simplification, efficiency, and altitude, and fix what you find. Run `/simplify` only on a larger diff, because it starts reviewer agents. Strip narrating, stale, or redundant comments directly. Do not spawn a separate comment-only subagent on routine diffs.
 
 2. **Run ONE unified fresh-context verifier subagent (the author never signs off alone).**
-   Spawn one isolated subagent with the goal, the diff against base, and the verification evidence. In a single pass, it must:
+   Spawn one fresh subagent with `subagent_type: "Explore"` and no `isolation`, so it reads the diff where it sits, committed or not. Give it the goal, the diff against base, and the verification evidence. It edits no file in the repo and writes its repro scripts outside it. In a single pass, it must:
    - **Break it (`interrogate` bar):** Try to break the change with a real command, test, or repro script. Report only run-proven failures; drop unproven style or speculative nitpicks.
    - **Prove safety (`blast-radius` bar):** Identify hidden downstream breakage grep misses and prove the one key safety fact by running code.
    - **Audit comments and checks (`no-comments` and anti-cheat bar):** Flag leftover workaround or constraint comments. For each check, test, lint, recipe, or property the diff edits or removes, test its base version against the new code. Report every edit, removal, or `KNOWN_ISSUES` entry that hides a defect or that neither the goal nor a fault in the check explains.

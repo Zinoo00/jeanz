@@ -25,7 +25,7 @@ pstack is written for Cursor. jeanz carries it as Claude Code-native text, so no
 | `run_in_background: true` | Omit it. Subagents run in the background and notify the parent. |
 | `resume` | `SendMessage` to the agent's ID to continue it with its context |
 | `file_attachments` | list the paths in the brief |
-| Cursor Projects (many workers on one goal) | parallel `Agent` calls in one message, each with `isolation: "worktree"`. A fan-out past about ten agents uses the `Workflow` tool, and only when the user has opted in. |
+| Cursor Projects (many workers on one goal) | parallel `Agent` calls in one message, each with `isolation: "worktree"`. A fan-out too large for one message uses the `Workflow` tool, and only when the user has opted in. |
 
 ## Models
 

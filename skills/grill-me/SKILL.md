@@ -10,7 +10,7 @@ This interview settles what the user wants, and the angle to take, before any wo
 
 ## 1. Look before you ask
 
-Read what the user pointed at and the code that it touches. A fact is yours to find, and a decision is the user's to make. Never ask what the repo, the docs, or a command can answer. When a fact takes long to find, send an `Explore` agent for it and go on with the questions that do not wait on it.
+Read what the user pointed at and the code that it touches. A fact is yours to find, and a decision is the user's to make. Never ask what the repo, the docs, or a command can answer. When a fact takes long to find, send an `Explore` agent for it and go on with the questions that do not wait on it. Keep the looking small. The interview shares its context with the work that follows, so read only what decides a question.
 
 ## 2. Ask in rounds
 
@@ -33,4 +33,4 @@ The interview ends when no decision is open and nothing is assumed in silence. R
 - what is out of scope
 - the angle of attack, and the first step
 
-Ask the user to confirm it or correct it, and start no work before that. From then on the baseline opens every kickoff.
+Ask the user to confirm it or correct it, and start no work before that. From then on the baseline opens every kickoff. When a skill started the interview, its next step follows as soon as the baseline is confirmed. For `/poteto-mode`, that step is to match the baseline to a playbook.

@@ -27,7 +27,7 @@ When a project does not fit, the project or its generated skill changes. jeanz c
 
 ## Main loop and verification loop
 
-Normal tasks run with two actors. The main loop reads, codes, runs local checks, cleans slop and comments, and fixes failures. One fresh-context verifier subagent then checks breakage, downstream safety, workaround comments, and check integrity in one pass. Extra subagents run only for parallel lanes, two to three competing worktrees on contradicting bug logics, high-stakes panels, or bulk read-only searches.
+One unit of work runs with two actors. The main loop reads, codes, runs local checks, cleans slop and comments, and fixes failures. One fresh-context verifier subagent then checks breakage, downstream safety, workaround comments, and check integrity in one pass. Several independent units run in [lanes](#lanes). Other subagents run only for two to three competing worktrees on contradicting bug logics, high-stakes panels, or bulk read-only searches.
 
 After any code change, `poteto-mode` runs the [Verification loop](../skills/poteto-mode/playbooks/verification-loop.md) automatically without waiting for the user. It runs local tests, `verify-<app>`, and `properties-<app>` when present for web UI changes, then calls the single fresh-context verifier. Proven findings loop back into main-loop fixes and verification-framework strengthening for up to three rounds, never weakening an existing check. More than three contradicting options stop for a talk with the user. Any remaining blockers, human calls, or competing variants go into one out-of-git HTML report under `~/.jeanz/reviews/` instead of markdown files in the repo.
 
@@ -35,7 +35,11 @@ After any code change, `poteto-mode` runs the [Verification loop](../skills/pote
 
 Agents that work at the same time each get a lane. A lane is one agent, its own worktree, and its own instance of the app, front end and back end both. A worktree splits the code, but agents that share one running app still wait on each other to test. Every lane runs on this machine, with no container and no cloud machine.
 
-The rule is in the Subagents section of [poteto-mode](../skills/poteto-mode/SKILL.md). A `/jeanz:poteto-mode` session reads it, and so does each `poteto-agent` that it starts. The project's `verify-<app>` skill says how an instance launches from any worktree, how it gets its ports, and whether instances share a database. `props.sh` locks the instance it drives, so a lane that points at another lane's instance is refused. A skill inside the repo keeps an evidence folder for each checkout, so `status.sh` reports the runs of the checkout it is given.
+Work with several independent units runs the project's full checks first, so the queue holds every unit. Then [`lanes.sh`](../skills/poteto-mode/scripts/lanes.sh) measures the cores and the free memory. It allows one lane per core, and as many lanes as free memory holds at the figure that `verify-<app>` gives for one lane. That many lanes start at once, and the rest wait in a queue for the next lane to free. One fresh-context verifier audits the whole diff at the end.
+
+A run that outlasts its chat keeps its lanes outside the chat. Each unit gets a kickoff file in a run folder under `~/.jeanz/runs/`, and those files are the queue. `claude --bg` starts each lane as a background session from the project folder. The lane runs the verification loop on its own unit, and its last message is its report. [`lane-sessions.sh`](../skills/poteto-mode/scripts/lane-sessions.sh) prints the state of every unit and saves each finished lane's report in the run folder. The chat only starts lanes and reads reports, so a new chat can pick the run up from the folder.
+
+The rule is in the Subagents section of [poteto-mode](../skills/poteto-mode/SKILL.md). A lane's duties are in `worker.md`, which every worker reads first, and no kickoff waives them. A session that starts above several projects works from the project's folder. When `isolation` cannot make a lane's worktree there, `git worktree add` does. The project's `verify-<app>` skill says how an instance launches from any worktree, how it gets its ports, and whether instances share a database. It also gives the memory one lane takes. `props.sh` locks the instance it drives, so a lane that points at another lane's instance is refused. A skill inside the repo keeps an evidence folder for each checkout, so `status.sh` reports the runs of the checkout it is given.
 
 ## What an app supplies to the property skill
 
@@ -69,7 +73,7 @@ Each behavior the sealed files claim has a case in `skills/create-property-skill
 
 The checks have tests too. `tools/check.test.sh` plants a violation of each rule and looks for it under that rule. It keeps its own list of the rules, and it fails when `tools/check.sh` runs another set. `tools/hooks.test.sh` runs the hooks against a stand-in check.
 
-Changes to playbooks and skills are tested against the ten-task set in [golden evals](golden-evals.md). Each task runs at least twice per variant to catch flaky flips and compare quality, latency, and cost.
+Changes to playbooks and skills are tested against the task set in [golden evals](golden-evals.md). Each task runs at least twice per variant to catch flaky flips and compare quality, latency, and cost.
 
 ## Limits
 

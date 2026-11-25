@@ -24,9 +24,11 @@ Before launching anything, add one entry per phase to the session's todo tool. W
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message with `subagent_type: "general-purpose"`, `isolation: "worktree"`, and the step 3 model, left unset for `auto` or `inherit-parent`. Omit `isolation` only for a worker that reads the user's own checkout and neither changes files nor runs the app. When a worker that edits or runs the app needs uncommitted changes, copy them into its worktree.
+Spawn the workers in one message with `subagent_type: "general-purpose"`, `isolation: "worktree"`, and the step 3 model, left unset for `auto` or `inherit-parent`. A worker that runs the app is a lane. When those outnumber what `scripts/lanes.sh` in [**poteto-mode**](../poteto-mode/SKILL.md) prints, spawn that many, queue the rest, and start each queued worker the moment a lane reports. Omit `isolation` only for a worker that reads the user's own checkout and neither changes files nor runs the app. When a worker that edits or runs the app needs uncommitted changes, copy them into its worktree.
 
 Each brief names the branch or commit its worker checks out first.
+
+The first line of each brief is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of the [**poteto-mode**](../poteto-mode/SKILL.md) skill's folder. That file carries the operator's rules and the lane rule to every worker.
 
 Every brief stands alone. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 

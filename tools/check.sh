@@ -8,7 +8,7 @@ EXEMPT='^\./(LICENSE|UPSTREAM\.md|docs/claude-code-port\.md|tools/(check\.sh|che
 TEXT=$(find . -type f -not -path './.git/*' -not -path '*/corpus/*' | sort)
 FILES=$(echo "$TEXT" | grep -vE "$EXEMPT")
 TPL=skills/create-property-skill/templates
-TESTS=(tools/typecheck.sh skills/create-property-skill/fixture/props.test.sh skills/adopt/scripts/status.test.sh tools/hooks.test.sh tools/check.test.sh)
+TESTS=(tools/typecheck.sh skills/create-property-skill/fixture/props.test.sh skills/adopt/scripts/status.test.sh skills/poteto-mode/scripts/lanes.test.sh skills/poteto-mode/scripts/run-stats.test.sh skills/poteto-mode/scripts/lane-sessions.test.sh tools/hooks.test.sh tools/check.test.sh)
 allowed() { python3 -I tools/allow.py filter; }
 
 fail=0
